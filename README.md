@@ -25,22 +25,27 @@
 ## 📸 功能截图
 
 ### 任务管理界面
+
 ![任务管理](img/任务管理.png)
 *创建和管理监控任务，设置关键词、价格范围、AI分析提示词等*
 
 ### 结果查看界面
+
 ![结果查看](img/结果查看.png)
 *查看爬取结果和AI分析结果，支持筛选和详细查看*
 
 ### 运行日志界面
+
 ![运行日志](img/运行日志.png)
 *实时查看系统运行日志，监控爬取状态和错误信息*
 
 ### 系统设置界面
+
 ![系统设置](img/系统设置.png)
 *配置OpenAI API、代理设置、邮件通知等系统参数*
 
 ### Cookie管理界面
+
 ![Cookie管理](img/Cookie管理.png)
 *管理闲鱼登录Cookie，支持多账号轮换使用*
 
@@ -71,6 +76,7 @@ ai-goofish-monitor/
 ### 核心模块说明
 
 #### `spider_v2.py` - 爬虫核心功能
+
 - **主要功能**：商品信息爬取、详情页解析、AI分析集成
 - **关键方法**：
   - `run_spider_task()`: 执行爬虫任务主流程
@@ -79,6 +85,7 @@ ai-goofish-monitor/
   - `download_all_images()`: 批量下载商品图片
 
 #### `web_server.py` - Web服务器和API
+
 - **主要功能**：提供Web管理界面和RESTful API
 - **关键接口**：
   - `/api/tasks/*`: 任务管理相关API
@@ -87,6 +94,7 @@ ai-goofish-monitor/
   - `/api/cookies/*`: Cookie管理API
 
 #### `database.py` - 数据库操作
+
 - **主要功能**：数据库初始化、数据CRUD操作
 - **关键方法**：
   - `init_db()`: 数据库初始化
@@ -95,6 +103,7 @@ ai-goofish-monitor/
   - `log_task_event()`: 记录任务日志
 
 #### `rate_limiter.py` - 频率控制
+
 - **主要功能**：请求频率限制、自适应延迟
 - **关键方法**：
   - `wait_if_needed()`: 智能等待控制
@@ -104,8 +113,9 @@ ai-goofish-monitor/
 ## 🗄️ 数据库表结构
 
 ### `tasks` - 任务表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | task_name | TEXT | 任务名称（唯一） |
 | keyword | TEXT | 搜索关键词 |
@@ -121,8 +131,9 @@ ai-goofish-monitor/
 | updated_at | TIMESTAMP | 更新时间 |
 
 ### `products` - 商品表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | task_id | INTEGER | 关联任务ID |
 | product_id | TEXT | 商品ID |
@@ -136,8 +147,9 @@ ai-goofish-monitor/
 | created_at | TIMESTAMP | 发现时间 |
 
 ### `ai_analysis` - AI分析表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | task_id | INTEGER | 关联任务ID |
 | product_id | INTEGER | 关联商品ID |
@@ -148,8 +160,9 @@ ai-goofish-monitor/
 | created_at | TIMESTAMP | 分析时间 |
 
 ### `cookies` - Cookie管理表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | name | TEXT | Cookie名称 |
 | cookie_value | TEXT | Cookie值（JSON） |
@@ -159,8 +172,9 @@ ai-goofish-monitor/
 | updated_at | TIMESTAMP | 更新时间 |
 
 ### `task_logs` - 任务日志表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | task_id | INTEGER | 关联任务ID |
 | level | TEXT | 日志级别（INFO/WARNING/ERROR） |
@@ -169,8 +183,9 @@ ai-goofish-monitor/
 | created_at | TIMESTAMP | 记录时间 |
 
 ### `email_logs` - 邮件日志表
+
 | 字段 | 类型 | 说明 |
-|------|------|------|
+| ------ | ------ | ------ |
 | id | INTEGER | 主键，自增 |
 | task_id | INTEGER | 关联任务ID |
 | product_id | INTEGER | 关联商品ID |
@@ -187,6 +202,7 @@ ai-goofish-monitor/
 ### 必需配置
 
 #### OpenAI API 配置
+
 ```env
 # OpenAI API密钥
 OPENAI_API_KEY=your_api_key_here
@@ -210,22 +226,26 @@ OPENAI_MODEL_NAME=gpt-4o
 ### 安装步骤
 
 1. **克隆项目**
+
 ```bash
 git clone https://github.com/ddCat-main/ai-goofish.git
-cd goofish-ai
+cd ai-goofish
 ```
 
-2. **安装Python依赖**
+1. **安装Python依赖**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **安装Playwright浏览器**
+1. **安装Playwright浏览器**
+
 ```bash
 playwright install chromium
 ```
 
-4. **配置环境变量**
+1. **配置环境变量**
+
 ```bash
 # 复制环境配置模板
 cp .env.example .env
@@ -267,20 +287,21 @@ docker run -d --name ai-goofish -p 8000:8000 \
 ### 运行说明
 
 1. **启动Web服务器**
+
 ```bash
 python web_server.py
 ```
 
-2. **访问管理界面**
-   - 打开浏览器访问：http://localhost:8000
+1. **访问管理界面**
+   - 打开浏览器访问：<http://localhost:8000>
    - 使用Web界面管理任务和查看结果
 
-3. **创建监控任务**
+2. **创建监控任务**
    - 在"任务管理"页面创建新任务
    - 设置关键词、价格范围等筛选条件
    - 配置AI分析提示词
 
-4. **启动任务**
+3. **启动任务**
    - 点击"启动任务"开始监控
    - 在"运行日志"页面查看实时状态
    - 在"结果查看"页面查看爬取结果
@@ -309,7 +330,7 @@ python web_server.py
 ## 📊 项目对比概览（相较于原版的主要改造和增强功能）
 
 | 功能模块 | 原版 (dingyufei615) | 当前版本 (ddCat-main) | 改进程度 |
-|---------|-------------------|---------------------|---------|
+| --------- | ------------------- | --------------------- | --------- |
 | 数据库架构 | 基于JSONL文件存储 | SQLite关系型数据库 | 🔥 重大改进 |
 | 代理管理 | 无代理支持 | 完整代理池管理系统 | 🆕 全新功能 |
 | 网络错误处理 | 基础重试机制 | 智能错误识别+代理切换 | 🔥 重大改进 |
@@ -324,6 +345,7 @@ python web_server.py
 当前版本相较于原版 [dingyufei615/ai-goofish-monitor](https://github.com/dingyufei615/ai-goofish-monitor) 的改进：
 
 ### 🔥 **重大架构升级**
+
 1. **数据存储**：从JSONL文件升级到SQLite关系型数据库
 2. **网络处理**：从简单重试升级到智能代理切换系统
 3. **日志系统**：从文件日志升级到结构化数据库日志
